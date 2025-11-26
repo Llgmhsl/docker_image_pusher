@@ -6,3 +6,10 @@ xhofe/alist:latest
 --platform=linux/arm64 xiaoyaliu/alist
 ghcr.io/product-science/mlnode:3.0.11
 nginx:1.28.0
+ghcr.io/product-science/tmkms-softsign-with-keygen:0.2.5
+ghcr.io/product-science/inferenced:0.2.5
+ghcr.io/product-science/api:0.2.5
+ghcr.io/product-science/bridge:0.2.5
+ghcr.io/product-science/proxy:0.2.5
+ghcr.io/product-science/proxy-ssl:0.2.5
+ghcr.io/product-science/explorer:latest
