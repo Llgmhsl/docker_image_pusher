@@ -13,3 +13,4 @@ ghcr.io/product-science/bridge:0.2.5
 ghcr.io/product-science/proxy:0.2.5
 ghcr.io/product-science/proxy-ssl:0.2.5
 ghcr.io/product-science/explorer:latest
+ghcr.io/korchasa/gonka-mlnode-with-proxy:latest
