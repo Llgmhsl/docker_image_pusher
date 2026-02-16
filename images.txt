@@ -20,3 +20,4 @@ ghcr.io/product-science/mlnode:3.0.12
 ghcr.io/product-science/mlnode:3.0.12-post1
 ghcr.io/product-science/mlnode:3.0.12-post2
 ghcr.io/product-science/mlnode:3.0.12-post3
+xubiaolin/zerotier-planet:1.14.2
