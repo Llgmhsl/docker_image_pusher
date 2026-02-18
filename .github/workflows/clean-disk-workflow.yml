@@ -1,0 +1,101 @@
+name: CI with Disk Cleanup
+
+on: [push, pull_request]  # 触发条件：推送代码或创建PR时
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # 使用GitHub托管的运行器
+    
+    steps:
+    # 步骤1: 检出代码
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1  # 只获取最近一次提交，节省空间
+    
+    # 步骤2: 检查初始磁盘空间
+    - name: Check initial disk space
+      run: |
+        echo "=== Initial Disk Space ==="
+        df -h
+        echo "=== Large directories ==="
+        du -sh /home/runner/* 2>/dev/null | sort -hr | head -10
+    
+    # 步骤3: 清理旧的诊断日志（解决你的错误）
+    - name: Clean old diagnostic logs
+      run: |
+        echo "Cleaning diagnostic logs..."
+        # 删除一天前的日志文件
+        sudo find /home/runner/actions-runner/cached/_diag/ -name "*.log" -mtime +0 -delete 2>/dev/null || true
+        # 或者直接清空目录（更彻底）
+        # sudo rm -rf /home/runner/actions-runner/cached/_diag/* 2>/dev/null || true
+    
+    # 步骤4: 清理APT缓存（如果使用Debian/Ubuntu）
+    - name: Clean APT cache
+      run: |
+        echo "Cleaning APT cache..."
+        sudo apt-get clean
+        sudo rm -rf /var/lib/apt/lists/*
+    
+    # 步骤5: 清理Docker缓存（如果使用Docker）
+    - name: Clean Docker cache
+      if: always()  # 即使后续步骤失败也执行
+      run: |
+        echo "Cleaning Docker cache..."
+        docker system prune -f 2>/dev/null || true
+        docker volume prune -f 2>/dev/null || true
+    
+    # 步骤6: 清理临时文件
+    - name: Clean temporary files
+      run: |
+        echo "Cleaning temporary files..."
+        sudo rm -rf /tmp/*
+        sudo rm -rf /var/tmp/*
+    
+    # 步骤7: 清理npm缓存（如果使用Node.js）
+    - name: Clean npm cache
+      run: |
+        echo "Cleaning npm cache..."
+        npm cache clean --force 2>/dev/null || true
+        rm -rf ~/.npm 2>/dev/null || true
+    
+    # 步骤8: 清理pip缓存（如果使用Python）
+    - name: Clean pip cache
+      run: |
+        echo "Cleaning pip cache..."
+        pip cache purge 2>/dev/null || true
+        rm -rf ~/.cache/pip 2>/dev/null || true
+    
+    # 步骤9: 清理Maven缓存（如果使用Java）
+    - name: Clean Maven cache
+      run: |
+        echo "Cleaning Maven cache..."
+        rm -rf ~/.m2/repository 2>/dev/null || true
+    
+    # 步骤10: 你的实际构建步骤（在这里添加你的正常构建流程）
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests
+      run: npm test
+    
+    # 步骤11: 清理工作空间（作业结束时）
+    - name: Clean workspace after job
+      if: always()  # 无论成功失败都执行
+      run: |
+        echo "=== Final Disk Space ==="
+        df -h
+        
+        # 清理工作目录
+        echo "Cleaning workspace..."
+        rm -rf node_modules 2>/dev/null || true
+        rm -rf dist 2>/dev/null || true
+        rm -rf build 2>/dev/null || true
+        
+        # 强制清理整个_work目录（注意：这会删除所有作业的数据）
+        # sudo rm -rf /home/runner/_work/* 2>/dev/null || true
