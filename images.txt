@@ -7,3 +7,4 @@ xhofe/alist:latest
 nginx:1.28.0
 xubiaolin/zerotier-planet:1.14.2
 ghcr.io/product-science/mlnode:3.0.13-alpha5
+akamitch7/mlnode:3.0.13-alpha5-gonka-top  
