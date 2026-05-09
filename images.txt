@@ -9,3 +9,4 @@ xubiaolin/zerotier-planet:1.14.2
 ghcr.io/product-science/mlnode:3.0.13-alpha5
 akamitch7/mlnode:3.0.13-alpha5-gonka-top  
 ghcr.io/product-science/mlnode:3.0.13
+ghcr.io/kaitakuai/mlnode-full:0.2.12-vllm0.20.0-b200-k5-kimi-1
