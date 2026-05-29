@@ -11,3 +11,4 @@ akamitch7/mlnode:3.0.13-alpha5-gonka-top
 ghcr.io/product-science/mlnode:3.0.13
 ghcr.io/kaitakuai/mlnode-full:0.2.12-vllm0.20.0-b200-k5-kimi-1
 ghcr.io/kaitakuai/mlnode-h200-minimax-m2-7:0.2.13-vllm0.20.0-k1
+alphaminetech/pearl-miner:1.7.5-beta
